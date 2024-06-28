@@ -11,10 +11,11 @@ class DetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chapter Details'),
+        title: Text('${chapterId}'),
         backgroundColor: Colors.deepPurple,
       ),
       body: FutureBuilder<ChapterDetails>(
+        key: UniqueKey(),
         future: ApiService.fetchDetailsChapter(chapterId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
