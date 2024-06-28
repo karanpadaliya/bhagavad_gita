@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:bhagavad_gita/model/ChapterDetailsModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:bhagavad_gita/model/chapter_model.dart';
 
@@ -20,18 +21,34 @@ class ApiService {
     }
   }
 
-  static Future<Chapter> fetchChapterDetails(int id) async {
+  static Future<ChapterDetails> fetchDetailsChapter(int id) async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl/chapter/$id'));
+      final response = await http.get(Uri.parse('$baseUrl/chapters/?:ch=$id'));
       if (response.statusCode == 200) {
-        final jsonResponse = json.decode(response.body);
-        return Chapter.fromJson(jsonResponse);
+        // Check if response body is a list
+        dynamic jsonResponse = json.decode(response.body);
+        if (jsonResponse is List) {
+          // Handle list response (for example, take the first item)
+          if (jsonResponse.isNotEmpty) {
+            return ChapterDetails.fromJson(jsonResponse[0]);
+          } else {
+            throw Exception('Empty list returned');
+          }
+        } else if (jsonResponse is Map<String, dynamic>) {
+          // Handle map response
+          return ChapterDetails.fromJson(jsonResponse);
+        } else {
+          throw Exception('Unexpected response format');
+        }
       } else {
-        throw Exception('Failed to load chapter detail: ${response.statusCode}');
+        print('Failed to load chapter details: ${response.statusCode}');
+        throw Exception('Failed to load chapter details: ${response.statusCode}');
       }
     } catch (e) {
       print('Error fetching chapter details: $e');
       throw Exception('Error fetching chapter details');
     }
   }
+
+
 }

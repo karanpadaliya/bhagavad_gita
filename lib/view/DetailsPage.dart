@@ -1,62 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:bhagavad_gita/controller/apiService.dart';
-import 'package:bhagavad_gita/model/chapter_model.dart';
+import 'package:bhagavad_gita/model/ChapterDetailsModel.dart'; // Import ChapterDetails if you haven't
 
-class DetailsPage extends StatefulWidget {
+class DetailsPage extends StatelessWidget {
   final int chapterId;
 
   DetailsPage({required this.chapterId});
-
-  @override
-  _DetailsPageState createState() => _DetailsPageState();
-}
-
-class _DetailsPageState extends State<DetailsPage> {
-  late Future<Chapter> futureChapter;
-
-  @override
-  void initState() {
-    super.initState();
-    futureChapter = ApiService.fetchChapterDetails(widget.chapterId);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Chapter Details'),
+        backgroundColor: Colors.deepPurple,
       ),
-      body: FutureBuilder<Chapter>(
-        future: futureChapter,
+      body: FutureBuilder<ChapterDetails>(
+        future: ApiService.fetchDetailsChapter(chapterId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData) {
-            return Center(child: Text('No chapter details available'));
+            return Center(child: Text('Error fetching chapter details'));
+          } else if (!snapshot.hasData || snapshot.data == null) {
+            return Center(child: Text('No data available'));
           } else {
-            Chapter chapter = snapshot.data!;
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
+            ChapterDetails chapterDetails = snapshot.data!;
+            return SingleChildScrollView(
+              padding: EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    chapter.name??"chapter.name_404",
+                    chapterDetails.name,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 8.0),
                   Text(
-                    'Chapter Number: ${chapter.chapterNumber}',
+                    'Translation: ${chapterDetails.translation}',
                     style: TextStyle(fontSize: 18),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 8.0),
                   Text(
-                    'Summary: ${chapter.summary}',
-                    style: TextStyle(fontSize: 16),
+                    'Transliteration: ${chapterDetails.transliteration}',
+                    style: TextStyle(fontSize: 18),
                   ),
-                  // Add other details you want to display
+                  SizedBox(height: 16.0),
+                  Text(
+                    'Meaning (EN): ${chapterDetails.meaningEN}',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  Text(
+                    'Meaning (HI): ${chapterDetails.meaningHI}',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  SizedBox(height: 16.0),
+                  Text(
+                    'Summary (EN): ${chapterDetails.summaryEN}',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  Text(
+                    'Summary (HI): ${chapterDetails.summaryHI}',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ],
               ),
             );

@@ -1,12 +1,9 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:bhagavad_gita/controller/apiService.dart';
-import 'package:bhagavad_gita/model/chapter_model.dart';
-import 'package:bhagavad_gita/view/DetailsPage.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cached_network_image/cached_network_image.dart'; // Import cached_network_image
 import 'package:flutter/material.dart';
+import 'package:bhagavad_gita/controller/apiService.dart';
+import 'package:bhagavad_gita/view/DetailsPage.dart';
+import 'package:bhagavad_gita/model/chapter_model.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -31,7 +28,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.white,
         title: Text('Bhagavad Gita Chapters'),
         backgroundColor: Colors.deepPurple,
       ),
@@ -91,17 +87,19 @@ class _HomePageState extends State<HomePage> {
                           contentPadding: EdgeInsets.all(10.0),
                           leading: Icon(Icons.book, color: Colors.deepPurple),
                           title: Text(
-                            chapter.name??"chapter.name_404",
+                            chapter.name,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           trailing: Icon(Icons.arrow_forward,
                               color: Colors.deepPurple),
                           onTap: () {
+                            print("chapter.chapterNumber ====> ${chapter.chapterNumber}");
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    DetailsPage(chapterId: chapter.chapterNumber??404),
+                                builder: (context) => DetailsPage(
+                                  chapterId: chapter.chapterNumber,
+                                ),
                               ),
                             );
                           },
