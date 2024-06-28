@@ -6,9 +6,6 @@
 The "Departure" app aims to create an immersive and personalized experience for users seeking spiritual guidance through the teachings of the Bhagavad Gita. By incorporating local JSON storage, Shared Preferences, like functionality, themes, chapter images, splash screens, detailed verse screens, and multi-language support, the app offers a comprehensive solution for users to explore and engage with this sacred text.
 
 ## Project Objectives
-- **Local JSON Bank:** Efficiently store and retrieve Bhagavad Gita verses for quick access, even offline.
-- **Like Bhagavad Gita's Verse:** Users can like or bookmark specific verses, creating a personalized collection of their favorite teachings.
-- **Light & Dark Themes:** Customizable themes for comfortable reading in different lighting conditions.
 - **Images in Each Verse's Chapters:** Relevant images or illustrations for each chapter to enhance understanding and visual appeal.
 - **Splash Screen:** A captivating splash screen that sets the tone for the user's spiritual journey.
 - **Detail Screen for Each Verse:** In-depth explanations, commentaries, and interpretations of each verse.
