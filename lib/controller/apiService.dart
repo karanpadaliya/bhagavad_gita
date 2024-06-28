@@ -1,65 +1,37 @@
-// services/api_service.dart
 import 'dart:convert';
-import 'package:bhagavad_gita/model/CommentaryModel.dart';
-import 'package:bhagavad_gita/model/TextModel.dart';
-import 'package:bhagavad_gita/model/TranslationModel.dart';
-import 'package:bhagavad_gita/model/TransliterationModel.dart';
-import 'package:bhagavad_gita/model/dataModel.dart';
 import 'package:http/http.dart' as http;
+import 'package:bhagavad_gita/model/chapter_model.dart';
 
 class ApiService {
-  final String baseUrl;
+  static const String baseUrl = 'https://bhagavadgitaapi.in';
 
-  ApiService({required this.baseUrl});
-
-  Future<Chapter> getChapter(int id) async {
-    final response = await http.get(Uri.parse('$baseUrl/chapter/$id'));
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return Chapter.fromJson(data['chapter']);
-    } else {
-      throw Exception('Failed to load chapter');
+  static Future<List<Chapter>> fetchChapters() async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/chapters'));
+      if (response.statusCode == 200) {
+        List<dynamic> jsonResponse = json.decode(response.body);
+        return jsonResponse.map((chapter) => Chapter.fromJson(chapter)).toList();
+      } else {
+        throw Exception('Failed to load chapters: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching chapters: $e');
+      throw Exception('Error fetching chapters');
     }
   }
 
-  Future<Commentary> getCommentary(int chapter, int verse) async {
-    final response = await http.get(Uri.parse('$baseUrl/text/commentaries/$chapter/$verse'));
-
-    if (response.statusCode == 200) {
-      return Commentary.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load commentary');
-    }
-  }
-
-  Future<TextModel> getText(int chapter, int verse) async {
-    final response = await http.get(Uri.parse('$baseUrl/text/$chapter/$verse'));
-
-    if (response.statusCode == 200) {
-      return TextModel.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load text');
-    }
-  }
-
-  Future<Translation> getTranslation(int chapter, int verse) async {
-    final response = await http.get(Uri.parse('$baseUrl/text/translations/$chapter/$verse'));
-
-    if (response.statusCode == 200) {
-      return Translation.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load translation');
-    }
-  }
-
-  Future<Transliteration> getTransliteration(int chapter, int verse) async {
-    final response = await http.get(Uri.parse('$baseUrl/text/transliterations/$chapter/$verse'));
-
-    if (response.statusCode == 200) {
-      return Transliteration.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load transliteration');
+  static Future<Chapter> fetchChapterDetails(int id) async {
+    try {
+      final response = await http.get(Uri.parse('$baseUrl/chapter/$id'));
+      if (response.statusCode == 200) {
+        final jsonResponse = json.decode(response.body);
+        return Chapter.fromJson(jsonResponse);
+      } else {
+        throw Exception('Failed to load chapter detail: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching chapter details: $e');
+      throw Exception('Error fetching chapter details');
     }
   }
 }

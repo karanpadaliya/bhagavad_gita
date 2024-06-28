@@ -38,25 +38,24 @@ class _SplashScreenState extends State<SplashScreen>
       end: Colors.black,
     ).animate(_controller);
 
-    _videoController = VideoPlayerController.networkUrl(
-      Uri(
-          path:
-              'https://cdnl.iconscout.com/lottie/premium/preview-watermark/lord-krishna-5863584-4921684.mp4'), // Replace with your actual video URL
+    _videoController = VideoPlayerController.network(
+      'https://cdnl.iconscout.com/lottie/premium/preview-watermark/lord-krishna-5863584-4921684.mp4',
     )..initialize().then((_) {
-        // Ensure the video starts playing automatically and loops
-        _videoController.play();
-        _videoController.setLooping(true);
-        setState(() {});
+        setState(() {
+          _videoController.play();
+          _videoController.setLooping(true);
+        });
       });
 
     // Navigate to HomePage after the specified duration
-    Timer(Duration(seconds: 7), () {
+    Timer(Duration(seconds: 5), () {
       _navigateToHomePage();
     });
   }
 
   void _navigateToHomePage() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => HomePage()));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => HomePage()));
   }
 
   @override
@@ -71,18 +70,21 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Video Player
           Padding(
             padding: const EdgeInsets.only(top: 150),
             child: Container(
-              height: 420, // Adjust the height as per your requirement
+              height: 300, // Adjust the height as per your requirement
               child: _videoController.value.isInitialized
                   ? AspectRatio(
                       aspectRatio: _videoController.value.aspectRatio,
                       child: VideoPlayer(_videoController),
                     )
-                  : Container(), // Placeholder for video player before initialization
+                  : Center(
+                      child:
+                          CircularProgressIndicator()), // Placeholder for video player before initialization
             ),
           ),
 
