@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _navigateToHomePage() {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => HomePage()));
+        .pushReplacement(MaterialPageRoute(builder: (_) => HomePage()));
   }
 
   @override
@@ -74,9 +74,9 @@ class _SplashScreenState extends State<SplashScreen>
         children: [
           // Video Player
           Padding(
-            padding: const EdgeInsets.only(top: 150),
+            padding: const EdgeInsets.only(top: 100),
             child: Container(
-              height: 300, // Adjust the height as per your requirement
+              height: 400, // Adjust the height as per your requirement
               child: _videoController.value.isInitialized
                   ? AspectRatio(
                       aspectRatio: _videoController.value.aspectRatio,
