@@ -15,7 +15,7 @@ class DetailsPage extends StatelessWidget {
         backgroundColor: Colors.deepPurple,
       ),
       body: FutureBuilder<ChapterDetails>(
-        key: UniqueKey(),
+        key: UniqueKey()  ,
         future: ApiService.fetchDetailsChapter(chapterId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
