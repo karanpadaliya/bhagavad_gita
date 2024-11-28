@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
-        title: Text('Bhagavad Gita Chapters'),
+        title: const Text('Bhagavad Gita Chapters'),
         backgroundColor: Colors.deepPurple,
       ),
       body: Column(
@@ -48,8 +48,8 @@ class _HomePageState extends State<HomePage> {
                   builder: (BuildContext context) {
                     return Container(
                       width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      decoration: const BoxDecoration(
                         color: Colors.amber,
                       ),
                       child: item.startsWith('http')
@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                               fit: BoxFit.cover,
                               placeholder: (context, url) => Container(),
                               errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                                  const Icon(Icons.error),
                             )
                           : Image.asset(item, fit: BoxFit.cover),
                     );
@@ -72,29 +72,31 @@ class _HomePageState extends State<HomePage> {
               future: futureChapters,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
-                  return Center(child: Text('Error fetching chapters'));
+                  return const Center(child: Text('Error fetching chapters'));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Center(child: Text('No chapters available'));
+                  return const Center(child: Text('No chapters available'));
                 } else {
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       Chapter chapter = snapshot.data![index];
                       return Card(
-                        margin: EdgeInsets.all(8.0),
+                        margin: const EdgeInsets.all(8.0),
                         child: ListTile(
-                          contentPadding: EdgeInsets.all(10.0),
-                          leading: Icon(Icons.book, color: Colors.deepPurple),
+                          contentPadding: const EdgeInsets.all(10.0),
+                          leading:
+                              const Icon(Icons.book, color: Colors.deepPurple),
                           title: Text(
                             chapter.name,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          trailing: Icon(Icons.arrow_forward,
+                          trailing: const Icon(Icons.arrow_forward,
                               color: Colors.deepPurple),
                           onTap: () {
-                            print("chapter.chapterNumber ====> ${chapter.chapterNumber}");
+                            print(
+                                "chapter.chapterNumber ====> ${chapter.chapterNumber}");
                             Navigator.push(
                               context,
                               MaterialPageRoute(

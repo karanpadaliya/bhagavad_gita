@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen>
     )..forward();
 
     _textAnimation = Tween<Offset>(
-      begin: Offset(0.0, -1.0), // Off-screen to top
+      begin: const Offset(0.0, -1.0), // Off-screen to top
       end: Offset.zero, // Final position
     ).animate(CurvedAnimation(
       parent: _controller,
@@ -48,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen>
       });
 
     // Navigate to HomePage after the specified duration
-    Timer(Duration(seconds: 5), () {
+    Timer(const Duration(seconds: 5), () {
       _navigateToHomePage();
     });
   }
@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen>
                       aspectRatio: _videoController.value.aspectRatio,
                       child: VideoPlayer(_videoController),
                     )
-                  : Center(
+                  : const Center(
                       child:
                           CircularProgressIndicator()), // Placeholder for video player before initialization
             ),
@@ -93,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen>
             position: _textAnimation,
             child: SafeArea(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(

@@ -24,7 +24,7 @@ class _DetailsPageState extends State<DetailsPage> {
         actions: [
           PopupMenuButton<String>(
             position: PopupMenuPosition.under,
-            icon: Icon(Icons.language), // Change the icon here
+            icon: const Icon(Icons.language), // Change the icon here
             onSelected: (String value) {
               setState(() {
                 _selectedLanguage = value;
@@ -37,14 +37,14 @@ class _DetailsPageState extends State<DetailsPage> {
                   child: Row(
                     children: [
                       _selectedLanguage == 'EN'
-                          ? Text(
+                          ? const Text(
                               'English',
                               style: TextStyle(color: Colors.deepPurple),
                             )
-                          : Text('English'),
-                      Spacer(),
+                          : const Text('English'),
+                      const Spacer(),
                       if (_selectedLanguage == 'EN')
-                        Icon(Icons.check, color: Colors.deepPurple),
+                        const Icon(Icons.check, color: Colors.deepPurple),
                     ],
                   ),
                 ),
@@ -53,14 +53,14 @@ class _DetailsPageState extends State<DetailsPage> {
                   child: Row(
                     children: [
                       _selectedLanguage == 'HI'
-                          ? Text(
+                          ? const Text(
                               'Hindi',
                               style: TextStyle(color: Colors.deepPurple),
                             )
-                          : Text("Hindi"),
-                      Spacer(),
+                          : const Text("Hindi"),
+                      const Spacer(),
                       if (_selectedLanguage == 'HI')
-                        Icon(Icons.check, color: Colors.deepPurple),
+                        const Icon(Icons.check, color: Colors.deepPurple),
                     ],
                   ),
                 ),
@@ -74,45 +74,45 @@ class _DetailsPageState extends State<DetailsPage> {
         future: ApiService.fetchDetailsChapter(widget.chapterId),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error fetching chapter details'));
+            return const Center(child: Text('Error fetching chapter details'));
           } else if (!snapshot.hasData || snapshot.data == null) {
-            return Center(child: Text('No data available'));
+            return const Center(child: Text('No data available'));
           } else {
             ChapterDetails chapterDetails = snapshot.data!;
             return SingleChildScrollView(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     chapterDetails.name,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Text(
                     'Translation: ${chapterDetails.translation}',
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   Text(
                     'Transliteration: ${chapterDetails.transliteration}',
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   _selectedLanguage == 'EN'
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Meaning (EN): ${chapterDetails.meaningEN}',
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                             ),
-                            SizedBox(height: 16.0),
+                            const SizedBox(height: 16.0),
                             Text(
                               'Summary (EN): ${chapterDetails.summaryEN}',
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                             ),
                           ],
                         )
@@ -121,12 +121,12 @@ class _DetailsPageState extends State<DetailsPage> {
                           children: [
                             Text(
                               'Meaning (HI): ${chapterDetails.meaningHI}',
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                             ),
-                            SizedBox(height: 16.0),
+                            const SizedBox(height: 16.0),
                             Text(
                               'Summary (HI): ${chapterDetails.summaryHI}',
-                              style: TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 18),
                             ),
                           ],
                         ),
